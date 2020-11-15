@@ -1,6 +1,11 @@
 
 """
 @author: SCHERIC
+@forked: JaySNL
+
+# Added beautification of Rxxx to D:HH:MM.
+# changed m117 to M117 because case sensitive
+# removed debug features
 """
 
 import sys
@@ -13,13 +18,19 @@ sourceFile = sys.argv[1]
 
 add_count = 0
 
-debug = 0
-
-if debug >= 1:
-    print(sourceFile)
-
-# M73 P86 R6
-#      %%  t
+def pretty_time_delta(seconds):
+    seconds = int(seconds)
+    days, seconds = divmod(seconds, 86400)
+    hours, seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
+    if days > 0:
+        return '%dD:%dH:%dM' % (days, hours, minutes)
+    elif hours > 0:
+        return '%dH:%dM' % (hours, minutes)
+    elif minutes > 0:
+        return '%dm' % (minutes)
+    else:
+        return '%ds' % (seconds,)
 
 with open(sourceFile, "r") as file:
     lines = file.readlines()
@@ -44,8 +55,13 @@ with open(sourceFile, "w") as file:
 
                 parsed[1] = parsed[1][1:]
                 parsed[2] = parsed[2][1:-1]
-
-                output = 'm117 ' + parsed[1] + '% ' + parsed[2] + " minutes left"
+                
+                time_minutes = int(parsed[2])
+                time_seconds = int(time_minutes * 60)
+                        
+                time_math = pretty_time_delta(time_seconds)
+                
+                output = 'M117 ' + parsed[1] + '% ' + time_math + " left"
 
                 if debug >= 2:
                     print(f"converted {stringMatch} to {output}")
@@ -59,10 +75,3 @@ with open(sourceFile, "w") as file:
 file.close()
 
 time_end = time.time()
-
-if debug >= 1:
-    print(f"added {add_count} extra m117 lines from {sourceFile}")
-    print(f"elapsed time: {round(time_end - time_start,4)} S")
-
-if debug >= 1:
-    wait = input('wait for user input.\n')
