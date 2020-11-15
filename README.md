@@ -17,7 +17,7 @@ Go to: `Print settings` > `Output options` > `Post-processing scripts`
 Add line: `"[python directory]\python.exe"  "[script directory]\script.py";`
 
 ### If using Python 3.7.x portable:
-Add line: `"Portable Python-3.7.9\Python-Launcher.exe"  "[script directory]\script.py";`
+Add line: `"[python directory]\Portable Python-3.7.9\Python-Launcher.exe"  "[script directory]\script.py";`
 
 # Why does this exist
 https://forum.duet3d.com/topic/14675/using-prusaslicers-m73-progress-to-run-macro
