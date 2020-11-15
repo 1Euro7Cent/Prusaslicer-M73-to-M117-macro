@@ -28,7 +28,7 @@ def pretty_time_delta(seconds):
     elif hours > 0:
         return '%dH:%dM' % (hours, minutes)
     elif minutes > 0:
-        return '%dm' % (minutes)
+        return '%dM' % (minutes)
     else:
         return '%ds' % (seconds,)
 
