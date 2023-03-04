@@ -63,9 +63,6 @@ with open(sourceFile, "w") as file:
                 
                 output = 'M117 ' + parsed[1] + '% ' + time_math + " left"
 
-                if debug >= 2:
-                    print(f"converted {stringMatch} to {output}")
-
                 # save new line to file
                 file.write(f"{output}\n")
 
